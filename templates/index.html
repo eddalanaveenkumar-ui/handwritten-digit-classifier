@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwritten Digit Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Handwritten Digit Classifier</h1>
+            <p>Draw a digit (0-9) and see AI predict it!</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Drawing Section -->
+            <div class="drawing-section">
+                <div class="canvas-container">
+                    <canvas id="drawingCanvas" width="280" height="280"></canvas>
+                    <div class="canvas-overlay">
+                        <span>Draw here</span>
+                    </div>
+                </div>
+
+                <div class="drawing-controls">
+                    <div class="brush-controls">
+                        <label for="brushSize">Brush Size:</label>
+                        <input type="range" id="brushSize" min="1" max="10" value="3">
+                        <span id="brushSizeValue">3</span>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="clearBtn" class="btn btn-secondary">Clear</button>
+                        <button id="predictBtn" class="btn btn-primary">Predict Digit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="prediction-card">
+                    <h3>Prediction Results</h3>
+
+                    <div id="loadingSpinner" class="loading hidden">
+                        <div class="spinner"></div>
+                        <p>Analyzing your digit...</p>
+                    </div>
+
+                    <div id="predictionResult" class="prediction-result hidden">
+                        <div class="predicted-digit">
+                            <span id="predictedNumber">5</span>
+                        </div>
+                        <p class="confidence">Confidence: <span id="confidenceValue">95%</span></p>
+
+                        <div class="model-info">
+                            <label for="modelSelect">Model:</label>
+                            <select id="modelSelect">
+                                <option value="rf">Random Forest</option>
+                                <option value="nn">Neural Network</option>
+                                <option value="ensemble">Ensemble (Recommended)</option>
+                                <option value="cnn">CNN (Most Accurate)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="errorMessage" class="error-message hidden">
+                        <p>⚠️ Please draw a digit first!</p>
+                    </div>
+                </div>
+
+                <!-- Confidence Bars -->
+                <div class="confidence-bars hidden" id="confidenceBars">
+                    <h4>Confidence by Digit:</h4>
+                    <div class="bars-container" id="barsContainer">
+                        <!-- Confidence bars will be generated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Processing Preview -->
+        <div class="preview-section hidden" id="previewSection">
+            <h4>What the AI sees (28x28):</h4>
+            <canvas id="previewCanvas" width="28" height="28"></canvas>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <h4>📊 Model Performance</h4>
+                <div id="modelStats">
+                    <p>Random Forest: <span id="rfAccuracy">-</span></p>
+                    <p>Neural Network: <span id="nnAccuracy">-</span></p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Built with Flask & Machine Learning | Handwritten Digit Recognition</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
